@@ -13,9 +13,9 @@
     <div id='mocha'></div>
     <script src='./index.js'></script>
   </body>
-  <script>
-    (phantomjs = window.mochaPhantomJS)
-      ? phantomjs.run()
-      : require('gravy')(mocha.run());
-  </script>
+    <script>
+      (phantomjs = window.mochaPhantomJS)
+        ? phantomjs.run()
+        : require('gravy')(mocha.run());
+    </script>
 </html>

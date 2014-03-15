@@ -5,15 +5,14 @@ var load = require('load-script');
 describe('document-write-replace', function(){
   var write = document.write;
 
-  it('should match a url', function(){
+  it('should match a url', function(done){
     replace('googleapis.com', function(){
       assert(document.write === write);
+      done();
     });
-    document.write('<script>var x = 4;</script>');
     assert(document.write !== write);
-    document.write('<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>');
-    assert(document.write !== write);
-    document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>');
-    assert(document.write === write);
+    setTimeout(function (){
+      document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>');
+    }, 300);
   });
 });

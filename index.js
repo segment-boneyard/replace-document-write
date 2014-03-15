@@ -8,7 +8,7 @@ var domify = require('domify');
  */
 
 module.exports = function(match, fn){
-  var write = document.write.bind(document);
+  var write = document.write;
   document.write = append;
 
   function append(str){
