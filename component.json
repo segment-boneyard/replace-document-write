@@ -10,12 +10,9 @@
   "development": {
     "segmentio/load-script": "*",
     "component/assert": "*",
-    "visionmedia/mocha": "*",
-    "yields/gravy": "*"
+    "visionmedia/mocha": "*"
   },
   "license": "MIT",
   "main": "index.js",
-  "scripts": [
-    "index.js"
-  ]
+  "scripts": ["index.js"]
 }
