@@ -1,4 +1,16 @@
+
+/**
+ * Module dependencies.
+ */
+
+var debug = require('debug')('replace-document-write');
 var domify = require('domify');
+
+/**
+ * Expose `replace`
+ */
+
+module.exports = replace;
 
 /**
  * Replace document.write until a url is written matching the url fragment
@@ -7,9 +19,12 @@ var domify = require('domify');
  * @param {Function} fn optional callback function
  */
 
-module.exports = function(match, fn){
+function replace(match, fn){
   var write = document.write;
+  if ('write' != write.name) return wait(match, fn);
   document.write = append;
+
+  debug('replace %s', match);
 
   function append(str){
     var el = domify(str)
@@ -18,9 +33,25 @@ module.exports = function(match, fn){
     if ('SCRIPT' == el.tagName) el = recreate(el);
     document.body.appendChild(el);
     document.write = write;
+    debug('replaced %s', match);
     fn && fn();
   }
 };
+
+/**
+ * Wait with the given `match` and `fn`.
+ *
+ * @param {String} match
+ * @param {Function} fn
+ * @api private
+ */
+
+function wait(match, fn){
+  var tid = setTimeout(function(){
+    clearTimeout(tid);
+    replace(match, fn);
+  });
+}
 
 /**
  * Re-create the given `script`.
@@ -30,7 +61,7 @@ module.exports = function(match, fn){
  * will never be loaded :/
  *
  * @param {Element} script
- * @api public
+ * @api private
  */
 
 function recreate(script){
