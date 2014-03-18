@@ -6,13 +6,24 @@ describe('document-write-replace', function(){
   var write = document.write;
 
   it('should match a url', function(done){
-    replace('googleapis.com', function(){
+    replace('jquery', function(){
       assert(document.write === write);
       done();
     });
     assert(document.write !== write);
     setTimeout(function (){
-      document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>');
+      document.write('<script src="fixtures/jquery.js"></script>');
     }, 300);
   });
+
+  it('should load a script given to document.write()', function(done){
+    replace('jquery');
+    document.write('<script src="fixtures/jquery.js"></script>');
+
+    (function ok(){
+      if (!window.jQuery) return setTimeout(ok);
+      assert('jquery' == window.jQuery());
+      done();
+    })();
+  })
 });

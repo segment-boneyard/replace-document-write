@@ -13,10 +13,30 @@ module.exports = function(match, fn){
 
   function append(str){
     var el = domify(str)
-    if (!el.src) return write(str);
+    var src = el.src || '';
     if (el.src.indexOf(match) === -1) return write(str);
+    if ('SCRIPT' == el.tagName) el = recreate(el);
     document.body.appendChild(el);
     document.write = write;
     fn && fn();
   }
+};
+
+/**
+ * Re-create the given `script`.
+ *
+ * domify() actually adds the script to he dom
+ * and then immediately removes it so the script
+ * will never be loaded :/
+ *
+ * @param {Element} script
+ * @api public
+ */
+
+function recreate(script){
+  var ret = document.createElement('script');
+  ret.src = script.src;
+  ret.async = script.async;
+  ret.defer = script.defer;
+  return ret;
 }
