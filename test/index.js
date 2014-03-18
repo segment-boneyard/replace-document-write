@@ -26,4 +26,18 @@ describe('document-write-replace', function(){
       done();
     })();
   })
+
+  it('should handle concurrent `replace(match, fn)`', function(done){
+    assert(write == document.write);
+    replace('a.js', end);
+    replace('b.js', end);
+    load('fixtures/analytics-a.js');
+    load('fixtures/analytics-b.js');
+
+    function end(){
+      end.times = end.times || 0;
+      if (2 == ++end.times) return done();
+      assert(write == document.write);
+    }
+  })
 });
