@@ -13,6 +13,7 @@ dependencies:
   cache_directories:
     - nsq-0.2.27.linux-amd64.go1.2
   override:
+    - npm install -g component
     - npm install -g component-test
 test:
   override:
