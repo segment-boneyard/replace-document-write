@@ -28,20 +28,20 @@ describe('document-write-replace', function(){
     })();
   })
 
-  it('should load a script given to document.write() into the specified elem', function(done){
+  it('should load a script given to document.write() into the specified parent', function(done){
     document.body.appendChild(domify('<div id="test-location"></div>'));
-    var elem = document.getElementById('test-location');
-    assert(elem.children.length === 0);
+    var parent = document.getElementById('test-location');
+    assert(parent.children.length === 0);
     
-    replace('jquery', elem);
+    replace('jquery', parent);
     document.write('<script src="fixtures/jquery.js"></script>');
 
     (function ok(){
       if (!window.jQuery) return setTimeout(ok);
       assert('jquery' == window.jQuery());
 
-      elem = document.getElementById('test-location');
-      assert(elem.children.length === 1);
+      parent = document.getElementById('test-location');
+      assert(parent.children.length === 1);
       done();
     })();
   })
