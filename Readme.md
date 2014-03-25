@@ -1,3 +1,4 @@
+[![Build Status](https://circleci.com/gh/segmentio/replace-document-write.png?circle-token=c6bfdb10c645559af1f7aa994d8b46493313982e)](https://circleci.com/gh/segmentio/replace-document-write)
 
 # replace-document-write
 
