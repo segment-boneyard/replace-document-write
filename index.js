@@ -4,19 +4,22 @@ var domify = require('domify');
  * Replace document.write until a url is written matching the url fragment
  *
  * @param {String} match
+ * @param {Element} elem to appendChild onto
  * @param {Function} fn optional callback function
  */
 
-module.exports = function(match, fn){
+module.exports = function(match, elem, fn){
   var write = document.write;
   document.write = append;
+  if (typeof elem === 'function') fn = elem, elem = null;
+  if (!elem) elem = document.body;
 
   function append(str){
     var el = domify(str)
     var src = el.src || '';
     if (el.src.indexOf(match) === -1) return write(str);
     if ('SCRIPT' == el.tagName) el = recreate(el);
-    document.body.appendChild(el);
+    elem.appendChild(el);
     document.write = write;
     fn && fn();
   }
