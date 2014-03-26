@@ -2,7 +2,7 @@
   "name": "replace-document-write",
   "repo": "segmentio/replace-document-write",
   "description": "Replace document write",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "keywords": [],
   "dependencies": {
     "component/domify": "1.2.0"
